@@ -18,31 +18,32 @@ COLOURS = {
 
 class Board:
 
-    def __init__(self, scene_manager):
+    def __init__(self, manager):
         self.board = []
         for x in range(0, 7):
             self.board.append([])
             for y in range(0, 6):
                 self.board[x].append('empty')
 
-        self.width = scene_manager.screen.get_width() / 1.5
-        self.height = scene_manager.screen.get_height() - 150
-        self.x = (scene_manager.screen.get_width() / 2) - (self.width / 2)
-        self.y = scene_manager.screen.get_height() - self.height
+        self.width = manager.screen.get_width() / 1.5
+        self.height = manager.screen.get_height() - 150
+        self.x = (manager.screen.get_width() / 2) - (self.width / 2)
+        self.y = manager.screen.get_height() - self.height
+        self.radius = manager.screen.get_width() / 30
 
-    def update(self, scene_manager):
+    def update(self, manager):
         self.checkfour('yellow')
 
     def checkfour(self, colour):
         pass
 
-    def render(self, scene_manager):
-        pygame.draw.rect(scene_manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height), 0, 10)
+    def render(self, manager):
+        pygame.draw.rect(manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height), 0, 10)
         for x in range(0, 7):
             for y in range(0, 6):
-                pygame.draw.circle(scene_manager.screen, COLOURS[self.board[x][y]],
+                pygame.draw.circle(manager.screen, COLOURS[self.board[x][y]],
                                    (((self.width / 7) * (x + 0.5)) + self.x,
-                                    ((self.height / 6) * (y + 0.5)) + self.y), RADIUS)
+                                    ((self.height / 6) * (y + 0.5)) + self.y), self.radius)
 
 
 class Player:
@@ -50,18 +51,31 @@ class Player:
     Class that defines a player object
     """
 
-    def __init__(self, scene_manager, controls, colour, x, y, col_width):
+    def __init__(self, manager, controls, colour, x, square_size):
         self.controls = controls
-        self.x = x
-        self.y = y
+        self.column = 0
+        self.square_size = square_size
         self.colour = colour
+        self.radius = manager.screen.get_width() / 30
+        self.x = x
+        self.y = (manager.screen.get_height() - manager.board.height) / 2
 
-    def update(self, data):
-        if data['turn'] == self.colour:
-            if data['pressed_keys'][self.controls[0]]:
-                self.x -= 1
-            if data['pressed_keys'][self.controls[1]]:
-                self.x += 1
+    def update(self, manager):
+        data = manager.data
+        if data['turn'] == self.colour and 'event_key' in data.keys():
+            if data['event_key'] == self.controls[0] and self.column > 0:
+                self.x -= self.square_size[0]
+                self.column -= 1
+                data.pop('event_key')
+            elif data['event_key'] == self.controls[1] and self.column < 6:
+                self.x += self.square_size[0]
+                self.column += 1
+                data.pop('event_key')
+            elif data['event_key'] == self.controls[2]:
+                if self.colour == 'red':
+                    data['turn'] = 'yellow'
+                else:
+                    data['turn'] = 'red'
 
-    def render(self, scene_manager):
-        pygame.draw.circle(scene_manager.screen, COLOURS[self.colour], (self.x, self.y), RADIUS)
+    def render(self, manager):
+        pygame.draw.circle(manager.screen, COLOURS[self.colour], (self.x, self.y), self.radius)

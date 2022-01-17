@@ -21,24 +21,25 @@ class SceneManager:
             'game': GameScene
         }
         self.data = {}
+        self.scene = None
 
-    def init(self, scene_manager, scene):
+    def init(self, scene):
         """
-        This tells the current scene to load all assets and data and reset everything to intial places
+        This tells the current scene to load all assets and data and reset everything to initial places
         """
 
-        self.scene = self.scenes[scene](scene_manager)
+        self.scene = self.scenes[scene](self)
 
-    def update(self, scene_manager):
+    def update(self):
         """
         This tells the current scene to update itself
         """
 
-        self.scene.update(scene_manager)
+        self.scene.update()
 
-    def render(self, scene_manager):
+    def render(self):
         """
         This tells the current scene to render itself on the screen. How this is done is specified by the scene object
         """
 
-        self.scene.render(scene_manager)
+        self.scene.render()

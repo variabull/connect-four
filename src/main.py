@@ -12,26 +12,28 @@ import scenes
 pygame.init()
 pygame.display.set_caption('Connect Four')
 # This creates the scene manager and registers the screen and clock
-scene_manager = scenes.SceneManager(
+manager = scenes.SceneManager(
     pygame.display.set_mode((0, 0), pygame.FULLSCREEN),
     pygame.time.Clock()
 )
 
-screen = scene_manager.screen
-clock = scene_manager.clock
-scene_manager.init(scene_manager, 'game')  # Start game scene
+screen = manager.screen
+clock = manager.clock
+manager.init('game')  # Start game scene
 
 while True:
     clock.tick(60)
     for event in pygame.event.get():
         if event.type == QUIT:
             sys.exit()
+        if event.type == KEYDOWN:
+            manager.scene.data['event_key'] = event.key
 
     # Update the current scene's data with the keys being pressed
-    scene_manager.scene.data['pressed_keys'] = pygame.key.get_pressed()
+    manager.scene.data['pressed_keys'] = pygame.key.get_pressed()
 
     screen.fill((70, 70, 70))
-    scene_manager.update(scene_manager)
-    scene_manager.render(scene_manager)
+    manager.update()
+    manager.render()
 
     pygame.display.update()

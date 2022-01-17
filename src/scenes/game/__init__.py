@@ -15,23 +15,28 @@ class GameScene:
     updating game objects, detecting collisions, rendering and loading and storing game data
     """
 
-    def __init__(self, scene_manager):
-        screen = scene_manager.screen
+    def __init__(self, manager):
+        self.manager = manager
+        self.screen = manager.screen
         self.data = {'turn': 'red'}
-        self.board = Board(scene_manager)
+        self.board = Board(self.manager)
 
         # Creates a local player with WASD controls
-        self.l_player = Player(scene_manager, [K_a, K_d], 'red',
-                                    ((self.board.width / 7) * 0.5) + self.board.x, 52.5)
+        self.l_player = Player(self, [K_a, K_d, K_s], 'red',
+                               ((self.board.width/7) * 0.5) + self.board.x,
+                               (self.board.width/7, self.board.height/6))
+
         # Creates local player with arrow key controls
-        self.r_player = Player(scene_manager, [K_LEFT, K_RIGHT], 'yellow',
-                                    ((self.board.width / 7) * 0.5) + self.board.x, 52.5)
+        self.r_player = Player(self, [K_LEFT, K_RIGHT, K_DOWN], 'yellow',
+                               ((self.board.width/7) * 0.5) + self.board.x,
+                               (self.board.width/7, self.board.height/6))
 
-    def update(self, scene_manager):
-        self.l_player.update(self.data)
-        self.r_player.update(self.data)
+    def update(self):
+        self.l_player.update(self)
+        self.r_player.update(self)
+        self.board.update(self)
 
-    def render(self, scene_manager):
-        self.l_player.render(scene_manager)
-        self.r_player.render(scene_manager)
-        self.board.render(scene_manager)
+    def render(self):
+        self.l_player.render(self)
+        self.r_player.render(self)
+        self.board.render(self)
