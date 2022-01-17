@@ -50,7 +50,7 @@ class Player:
     Class that defines a player object
     """
 
-    def __init__(self, scene_manager, controls, colour, x, y):
+    def __init__(self, scene_manager, controls, colour, x, y, col_width):
         self.controls = controls
         self.x = x
         self.y = y
