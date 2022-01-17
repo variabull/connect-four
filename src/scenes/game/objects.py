@@ -12,12 +12,13 @@ class Board:
 
     def __init__(self, scene_manager):
         self.board = []
-        self.img = pygame.image.load('assets/board.png').convert_alpha()
-        self.x = scene_manager.screen.get_width() / 2
-        self.y = 0
+        self.width = scene_manager.screen.get_width() / 1.5
+        self.height = scene_manager.screen.get_height()
+        self.x = (scene_manager.screen.get_width() / 2) - (self.width / 2)
+        self.y = (scene_manager.screen.get_height() / 2) - (self.height / 2)
 
     def render(self, scene_manager):
-        scene_manager.screen.blit(self.img, (self.x, self.y))
+        pygame.draw.rect(scene_manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height))
 
 
 class Player:
