@@ -17,16 +17,15 @@ class GameScene:
 
     def __init__(self, scene_manager):
         screen = scene_manager.screen
-        self.data = {}
+        self.data = {'turn': 'red'}
+        self.board = Board(scene_manager)
 
         # Creates a local player with WASD controls
-        self.l_player = Player(scene_manager, [K_a, K_d], (255, 0, 0),
-                                    (screen.get_width() * 2/6), screen.get_height()/2)
+        self.l_player = Player(scene_manager, [K_a, K_d], 'red',
+                                    ((self.board.width / 7) * 0.5) + self.board.x, 52.5)
         # Creates local player with arrow key controls
-        self.r_player = Player(scene_manager, [K_LEFT, K_RIGHT], (255, 255, 0),
-                                    (screen.get_width() * 4/6), screen.get_height()/2)
-
-        self.board = Board(scene_manager)
+        self.r_player = Player(scene_manager, [K_LEFT, K_RIGHT], 'yellow',
+                                    ((self.board.width / 7) * 0.5) + self.board.x, 52.5)
 
     def update(self, scene_manager):
         self.l_player.update(self.data)
