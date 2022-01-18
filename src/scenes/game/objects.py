@@ -31,8 +31,20 @@ class Board:
         self.y = manager.screen.get_height() - self.height
         self.radius = manager.screen.get_width() / 30
 
-    def update(self, manager):
-        self.checkfour('yellow')
+    def play(self, manager, col):
+        colour = manager.data['turn']
+        placed = False
+        for i in range(len(self.board[col])-1, -1, -1):
+            if self.board[col][i] == 'empty':
+                self.board[col][i] = colour
+                placed = True
+                break
+
+        if placed:
+            if colour == 'red':
+                manager.data['turn'] = 'yellow'
+            else:
+                manager.data['turn'] = 'red'
 
     def checkfour(self, colour):
         pass
@@ -51,18 +63,17 @@ class Player:
     Class that defines a player object
     """
 
-    def __init__(self, manager, controls, colour, x, square_size):
+    def __init__(self, manager, controls, x, square_size):
         self.controls = controls
         self.column = 0
         self.square_size = square_size
-        self.colour = colour
         self.radius = manager.screen.get_width() / 30
         self.x = x
         self.y = (manager.screen.get_height() - manager.board.height) / 2
 
     def update(self, manager):
         data = manager.data
-        if data['turn'] == self.colour and 'event_key' in data.keys():
+        if 'event_key' in data.keys():
             if data['event_key'] == self.controls[0] and self.column > 0:
                 self.x -= self.square_size[0]
                 self.column -= 1
@@ -72,10 +83,8 @@ class Player:
                 self.column += 1
                 data.pop('event_key')
             elif data['event_key'] == self.controls[2]:
-                if self.colour == 'red':
-                    data['turn'] = 'yellow'
-                else:
-                    data['turn'] = 'red'
+                manager.board.play(manager, self.column)
+                data.pop('event_key')
 
     def render(self, manager):
-        pygame.draw.circle(manager.screen, COLOURS[self.colour], (self.x, self.y), self.radius)
+        pygame.draw.circle(manager.screen, COLOURS[manager.data['turn']], (self.x, self.y), self.radius)
