@@ -48,17 +48,31 @@ class Board:
     def check_four(self, manager, coords, colour):
         consecutive = 0
         for x in range(-1, 2):
-            if x + coords[0] == 7:
-                pass
-            for y in range(-1, 2):
-                if y + coords[1] == 6:
-                    pass
-                consecutive += coords[x][y] == colour
-                for i in range(0, 2):
-                    x -= x
-                    y -= y
-                    if y +
-                    consecutive += coords[x][y] == colour
+            if -1 < x + coords[0] < 8:
+                for y in range(-1, 2):
+                    if -1 < y + coords[1] < 7:
+                        consecutive += self.board[coords[0] + x][coords[1] + y] == colour
+                        for i in range(0, 2):
+                            x -= x
+                            y -= y
+                            if not -1 < x + coords[0] < 8:
+                                pass
+                            if not -1 < y + coords[1] < 7:
+                                pass
+                            consecutive += self.board[coords[0] + x][coords[1] + y] == colour
+                        for i in range(0, 2):
+                            x += x
+                            y += y
+                            if not -1 < x + coords[0] < 8:
+                                pass
+                            if not -1 < y + coords[1] < 7:
+                                pass
+                            consecutive += self.board[coords[0] + x][coords[1] + y] == colour
+
+        if consecutive == 4:
+            print('yup')
+        else:
+            print('nop')
 
 
     def render(self, manager):
