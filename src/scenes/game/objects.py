@@ -39,11 +39,29 @@ class Board:
                     manager.data['turn'] = 'yellow'
                 else:
                     manager.data['turn'] = 'red'
-                self.check_four((col, i), colour)
+                print(self.check_win((col, i), colour))
                 break
 
-    def check_four(self, coords, colour):
-        pass
+    def check_win(self, coords, colour):
+        consecutive = 1
+        for x in range(-1, 2):
+            for y in range(-1, 2):
+                if x == 0 and y == 0:
+                    continue
+                for i in range(1, 4):
+                    if -1 < coords[0] + (x * i) < 7 and -1 < coords[1] + (y * i) < 6 and self.board[coords[0] + (x * i)][coords[1] + (y * i)] == colour:
+                        consecutive += 1
+                    else:
+                        break
+                for i in range(1, 4):
+                    if -1 < coords[0] - (x * i) < 7 and -1 < coords[1] - (y * i) < 6 and self.board[coords[0] - (x * i)][coords[1] - (y * i)] == colour:
+                        consecutive += 1
+                    else:
+                        break
+                if consecutive > 3:
+                    return True
+                consecutive = 1
+        return False
 
     def render(self, manager):
         pygame.draw.rect(manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height), 0, 10)
