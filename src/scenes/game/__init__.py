@@ -1,6 +1,6 @@
 # Game Scene
 # Contributors: Jacob Nettleship
-# Date edited: 04/01/22
+# Date edited: 21/01/22
 """
 File containing instructions on the game scene
 """
@@ -21,7 +21,7 @@ class GameScene:
         self.data = {'turn': 'red'}
         self.board = Board(self.manager)
 
-        # Creates local player with arrow key controls
+        # Creates player with arrow key controls
         self.player = Player(self, [K_LEFT, K_RIGHT, K_DOWN],
                              ((self.board.width / 7) * 0.5) + self.board.x,
                              (self.board.width / 7, self.board.height / 6))

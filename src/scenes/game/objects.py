@@ -1,14 +1,12 @@
 # Game Players
 # Contributors: Jacob Nettleship
-# Date edited: 04/01/22
+# Date edited: 21/01/22
 """
 File defining player objects and controllers
 """
 
 import pygame
-from pygame.locals import *
 
-RADIUS = 45
 COLOURS = {
     'empty': (70, 70, 70),
     'red': (255, 0, 0),
@@ -33,8 +31,7 @@ class Board:
 
     def play(self, manager, col):
         colour = manager.data['turn']
-        placed = False
-        for i in range(len(self.board[col])-1, -1, -1):
+        for i in range(len(self.board[col]) - 1, -1, -1):
             if self.board[col][i] == 'empty':
                 self.board[col][i] = colour
 
@@ -42,38 +39,11 @@ class Board:
                     manager.data['turn'] = 'yellow'
                 else:
                     manager.data['turn'] = 'red'
-                self.check_four(manager, (col, i), colour)
+                self.check_four((col, i), colour)
                 break
 
-    def check_four(self, manager, coords, colour):
-        consecutive = 0
-        for x in range(-1, 2):
-            if -1 < x + coords[0] < 8:
-                for y in range(-1, 2):
-                    if -1 < y + coords[1] < 7:
-                        consecutive += self.board[coords[0] + x][coords[1] + y] == colour
-                        for i in range(0, 2):
-                            x -= x
-                            y -= y
-                            if not -1 < x + coords[0] < 8:
-                                pass
-                            if not -1 < y + coords[1] < 7:
-                                pass
-                            consecutive += self.board[coords[0] + x][coords[1] + y] == colour
-                        for i in range(0, 2):
-                            x += x
-                            y += y
-                            if not -1 < x + coords[0] < 8:
-                                pass
-                            if not -1 < y + coords[1] < 7:
-                                pass
-                            consecutive += self.board[coords[0] + x][coords[1] + y] == colour
-
-        if consecutive == 4:
-            print('yup')
-        else:
-            print('nop')
-
+    def check_four(self, coords, colour):
+        pass
 
     def render(self, manager):
         pygame.draw.rect(manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height), 0, 10)
