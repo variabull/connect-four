@@ -18,7 +18,7 @@ class GameScene:
     def __init__(self, manager):
         self.manager = manager
         self.screen = manager.screen
-        self.data = {'turn': 'red'}
+        self.data = {'turn': 'red', 'won': False}
         self.board = Board(self.manager)
 
         # Creates player with arrow key controls
@@ -27,7 +27,8 @@ class GameScene:
                              (self.board.width / 7, self.board.height / 6))
 
     def update(self):
-        self.player.update(self)
+        if not self.data['won']:
+            self.player.update(self)
 
     def render(self):
         self.player.render(self)

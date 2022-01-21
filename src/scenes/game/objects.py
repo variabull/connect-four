@@ -39,7 +39,7 @@ class Board:
                     manager.data['turn'] = 'yellow'
                 else:
                     manager.data['turn'] = 'red'
-                print(self.check_win((col, i), colour))
+                manager.data['won'] = self.check_win((col, i), colour)
                 break
 
     def check_win(self, coords, colour):
