@@ -1,6 +1,6 @@
 # Game Players
 # Contributors: Jacob Nettleship
-# Date edited: 21/01/22
+# Date edited: 22/01/22
 """
 File defining player objects and controllers
 """
@@ -34,12 +34,12 @@ class Board:
         for i in range(len(self.board[col]) - 1, -1, -1):
             if self.board[col][i] == 'empty':
                 self.board[col][i] = colour
-
-                if colour == 'red':
+                if self.check_win((col, i), colour):
+                    manager.data['won'] = True
+                elif colour == 'red':
                     manager.data['turn'] = 'yellow'
                 else:
                     manager.data['turn'] = 'red'
-                manager.data['won'] = self.check_win((col, i), colour)
                 break
 
     def check_win(self, coords, colour):

@@ -1,11 +1,12 @@
 # Scenes
 # Contributors: Jacob Nettleship
-# Date edited: 04/01/22
+# Date edited: 22/01/22
 """
 Init file for scenes package containing SceneManager
 """
 
 from .game import GameScene
+from .menu import MenuScene
 
 
 class SceneManager:
@@ -18,7 +19,8 @@ class SceneManager:
         self.screen = screen
         self.clock = clock
         self.scenes = {
-            'game': GameScene
+            'game': GameScene,
+            'menu': MenuScene
         }
         self.data = {}
         self.scene = None

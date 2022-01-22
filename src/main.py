@@ -1,6 +1,6 @@
 # Mountain Rescue
 # Contributors: Jacob Nettleship
-# Date edited: 03/01/22
+# Date edited: 22/01/22
 """
 Main file that is run when app is opened
 """
@@ -19,7 +19,7 @@ manager = scenes.SceneManager(
 
 screen = manager.screen
 clock = manager.clock
-manager.init('game')  # Start game scene
+manager.init('menu')  # Start menu scene
 
 while True:
     clock.tick(60)
@@ -28,6 +28,8 @@ while True:
             sys.exit()
         if event.type == KEYDOWN:
             manager.scene.data['event_key'] = event.key
+        if event.type == MOUSEBUTTONDOWN:
+            manager.scene.data['mouse_click'] = event.pos
 
     # Update the current scene's data with the keys being pressed
     manager.scene.data['pressed_keys'] = pygame.key.get_pressed()
