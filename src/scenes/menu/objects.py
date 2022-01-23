@@ -12,8 +12,8 @@ from globals.ui_elements import Button
 
 class PlayButton(Button):
 
-    def __init__(self, font, x, y, width, height, text):
-        super().__init__(font, x, y, width, height, text)
+    def __init__(self, font, x, y, width, height, text, bg_colour, text_colour, positioning=1/2):
+        super().__init__(font, x, y, width, height, text, bg_colour, text_colour, positioning)
 
     def handle_event(self, scene_manager, manager, event):
         if event.type == MOUSEBUTTONDOWN:

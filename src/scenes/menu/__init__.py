@@ -25,15 +25,15 @@ class MenuScene:
 
         self.play_button = PlayButton(self.font, self.screen.get_width() / 2,
                                       self.screen.get_height() / 4, self.screen.get_width() / 5,
-                                      self.screen.get_width() / 20, 'Play')
+                                      self.screen.get_width() / 20, 'Play', 'red', 'white')
 
         self.player1 = TextInput(self.font, self.screen.get_width() * 1 / 4,
                                  self.screen.get_height() / 4, self.screen.get_width() / 5,
-                                 self.screen.get_width() / 20)
+                                 self.screen.get_width() / 20, 'red', 'white')
 
         self.player2 = TextInput(self.font, self.screen.get_width() * 3 / 4,
                                  self.screen.get_height() / 4, self.screen.get_width() / 5,
-                                 self.screen.get_width() / 20)
+                                 self.screen.get_width() / 20, 'red', 'white')
 
     def handle_event(self, event):
         self.play_button.handle_event(self.manager, self, event)

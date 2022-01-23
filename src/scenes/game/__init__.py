@@ -30,10 +30,10 @@ class GameScene:
 
         self.player1_text = Text(self.font, 0, self.screen.get_height() / 10,
                                  self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][0],
-                                 'red', 0)
+                                 'red', 'white', 0)
         self.player2_text = Text(self.font, self.screen.get_width(), self.screen.get_height() / 10,
                                  self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][1],
-                                 'yellow', 1)
+                                 'yellow', 'black', 1)
 
         self.board = Board(self.manager)
 
