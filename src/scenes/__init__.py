@@ -1,6 +1,6 @@
 # Scenes
 # Contributors: Jacob Nettleship
-# Date edited: 22/01/22
+# Date edited: 23/01/22
 """
 Init file for scenes package containing SceneManager
 """
@@ -31,6 +31,13 @@ class SceneManager:
         """
 
         self.scene = self.scenes[scene](self)
+
+    def handle_event(self, event):
+        """
+        When an event occurs this is used to pass it to the current scene to handle
+        """
+
+        self.scene.handle_event(event)
 
     def update(self):
         """

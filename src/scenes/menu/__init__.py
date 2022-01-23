@@ -1,12 +1,14 @@
 # Menu Scene
 # Contributors: Jacob Nettleship
-# Date edited: 22/01/22
+# Date edited: 23/01/22
 """
 File containing instructions on the menu scene
 """
 
 import pygame
-from ui_elements import TextInput, Button
+from globals.constants import *
+from globals.ui_elements import TextInput
+from .objects import PlayButton
 
 
 class MenuScene:
@@ -19,14 +21,31 @@ class MenuScene:
         self.manager = manager
         self.screen = manager.screen
         self.data = {}
-        self.font = pygame.font.Font(None, self.screen.get_width() // 20)
-        self.game_button = Button(self.font, (self.screen.get_width() / 2) - self.screen.get_width() / 10,
-                                  self.screen.get_height() / 4, self.screen.get_width() / 5,
-                                  self.screen.get_width() / 20, 'Play',
-                                  lambda: self.manager.init('game'))
+        self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR)
+
+        self.play_button = PlayButton(self.font, self.screen.get_width() / 2,
+                                      self.screen.get_height() / 4, self.screen.get_width() / 5,
+                                      self.screen.get_width() / 20, 'Play')
+
+        self.player1 = TextInput(self.font, self.screen.get_width() * 1 / 4,
+                                 self.screen.get_height() / 4, self.screen.get_width() / 5,
+                                 self.screen.get_width() / 20)
+
+        self.player2 = TextInput(self.font, self.screen.get_width() * 3 / 4,
+                                 self.screen.get_height() / 4, self.screen.get_width() / 5,
+                                 self.screen.get_width() / 20)
+
+    def handle_event(self, event):
+        self.play_button.handle_event(self.manager, self, event)
+        self.player1.handle_event(event)
+        self.player2.handle_event(event)
 
     def update(self):
-        self.game_button.update(self)
+        self.play_button.update(self)
+        self.player1.update()
+        self.player2.update()
 
     def render(self):
-        self.game_button.render(self)
+        self.play_button.render(self)
+        self.player1.render(self)
+        self.player2.render(self)

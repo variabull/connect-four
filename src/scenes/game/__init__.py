@@ -1,6 +1,6 @@
 # Game Scene
 # Contributors: Jacob Nettleship
-# Date edited: 21/01/22
+# Date edited: 23/01/22
 """
 File containing instructions on the game scene
 """
@@ -18,7 +18,12 @@ class GameScene:
     def __init__(self, manager):
         self.manager = manager
         self.screen = manager.screen
-        self.data = {'turn': 'red', 'won': False}
+        self.data = {
+            'turn': 'red',
+            'won': False,
+            'names': self.manager.data['player_names']
+        }
+
         self.board = Board(self.manager)
 
         # Creates player with arrow key controls
@@ -26,9 +31,12 @@ class GameScene:
                              ((self.board.width / 7) * 0.5) + self.board.x,
                              (self.board.width / 7, self.board.height / 6))
 
-    def update(self):
+    def handle_event(self, event):
         if not self.data['won']:
-            self.player.update(self)
+            self.player.handle_event(self, event)
+
+    def update(self):
+        pass
 
     def render(self):
         self.player.render(self)

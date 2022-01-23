@@ -1,12 +1,13 @@
 # Mountain Rescue
 # Contributors: Jacob Nettleship
-# Date edited: 22/01/22
+# Date edited: 23/01/22
 """
 Main file that is run when app is opened
 """
 
 import pygame, sys
 from pygame.locals import *
+from globals.constants import *
 import scenes
 
 pygame.init()
@@ -26,15 +27,13 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             sys.exit()
-        if event.type == KEYDOWN:
-            manager.scene.data['event_key'] = event.key
-        if event.type == MOUSEBUTTONDOWN:
-            manager.scene.data['mouse_click'] = event.pos
+        else:
+            manager.scene.handle_event(event)
 
     # Update the current scene's data with the keys being pressed
     manager.scene.data['pressed_keys'] = pygame.key.get_pressed()
 
-    screen.fill((70, 70, 70))
+    screen.fill(COLOURS['grey'])
     manager.update()
     manager.render()
 
