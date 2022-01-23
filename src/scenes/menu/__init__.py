@@ -21,7 +21,7 @@ class MenuScene:
         self.manager = manager
         self.screen = manager.screen
         self.data = {}
-        self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR)
+        self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_1)
 
         self.play_button = PlayButton(self.font, self.screen.get_width() / 2,
                                       self.screen.get_height() / 4, self.screen.get_width() / 5,

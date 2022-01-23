@@ -5,8 +5,11 @@
 File containing instructions on the game scene
 """
 
-from .objects import Board, Player
+import pygame
 from pygame.locals import *
+from globals.constants import *
+from globals.ui_elements import Text
+from .objects import Board, Player
 
 
 class GameScene:
@@ -23,6 +26,14 @@ class GameScene:
             'won': False,
             'names': self.manager.data['player_names']
         }
+        self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
+
+        self.player1_text = Text(self.font, 0, self.screen.get_height() / 10,
+                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][0],
+                                 'red', 0)
+        self.player2_text = Text(self.font, self.screen.get_width(), self.screen.get_height() / 10,
+                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][1],
+                                 'yellow', 1)
 
         self.board = Board(self.manager)
 
@@ -41,3 +52,5 @@ class GameScene:
     def render(self):
         self.player.render(self)
         self.board.render(self)
+        self.player1_text.render(self)
+        self.player2_text.render(self)

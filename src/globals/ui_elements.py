@@ -12,7 +12,7 @@ from globals.constants import *
 
 class TextInput:
 
-    def __init__(self, font, x, y, width, height, text=''):
+    def __init__(self, font, x, y, width, height, text='', positioning=1/2):
         self.font = font
         self.text = text
         self.text_surface = font.render(text, True, COLOURS['white'])
@@ -21,6 +21,7 @@ class TextInput:
         self.y = y
         self.width = width
         self.padding = 20
+        self.positioning = positioning
 
         self.rect = pygame.Rect(x - width / 2, y - height / 2, width, height)
         self.active = False
@@ -40,22 +41,38 @@ class TextInput:
     def update(self):
         self.text_surface = self.font.render(self.text, True, COLOURS['white'])
         self.rect.width = max(self.width, self.text_surface.get_width() + self.padding)
-        self.rect.x = self.x - self.rect.width / 2
+        self.rect.x = self.x - self.rect.width * self.positioning
 
     def render(self, manager):
         pygame.draw.rect(manager.screen, COLOURS['red'], self.rect)
         manager.screen.blit(self.text_surface, (self.rect.x + (self.rect.width / 2 - self.text_surface.get_width() / 2),
-                                            self.rect.y + (self.rect.height / 2 - self.text_surface.get_height() / 2)))
+                                                self.rect.y + (
+                                                            self.rect.height / 2 - self.text_surface.get_height() / 2)))
 
 
 class Button:
 
-    def __init__(self, font, x, y, width, height, text):
-        self.rect = pygame.Rect(x - width / 2, y - height / 2, width, height)
+    def __init__(self, font, x, y, width, height, text, positioning=1/2):
+        self.rect = pygame.Rect(x - width * positioning, y - height / 2, width, height)
         self.text_surface = font.render(text, True, COLOURS['white'])
         self.active = True
 
     def render(self, manager):
         pygame.draw.rect(manager.screen, COLOURS['red'], self.rect)
         manager.screen.blit(self.text_surface, (self.rect.x + (self.rect.width / 2 - self.text_surface.get_width() / 2),
-                                            self.rect.y + (self.rect.height / 2 - self.text_surface.get_height() / 2)))
+                                                self.rect.y + (
+                                                            self.rect.height / 2 - self.text_surface.get_height() / 2)))
+
+
+class Text:
+
+    def __init__(self, font, x, y, width, height, text, bg_colour, positioning=1/2):
+        self.rect = pygame.Rect(x - width * positioning, y - height / 2, width, height)
+        self.text_surface = font.render(text, True, COLOURS['white'])
+        self.bg_colour = bg_colour
+
+    def render(self, manager):
+        pygame.draw.rect(manager.screen, COLOURS[self.bg_colour], self.rect)
+        manager.screen.blit(self.text_surface,
+                            (self.rect.x + (self.rect.width / 2 - self.text_surface.get_width() / 2),
+                             self.rect.y + (self.rect.height / 2 - self.text_surface.get_height() / 2)))

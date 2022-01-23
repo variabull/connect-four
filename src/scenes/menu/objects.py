@@ -6,6 +6,7 @@ Objects for the menu
 """
 
 from pygame.locals import *
+from random import shuffle
 from globals.ui_elements import Button
 
 
@@ -17,7 +18,9 @@ class PlayButton(Button):
     def handle_event(self, scene_manager, manager, event):
         if event.type == MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos) and self.active:
-                scene_manager.data['player_names'] = (manager.player1.text, manager.player2.text)
+                player_order = [manager.player1.text, manager.player2.text]
+                shuffle(player_order)
+                scene_manager.data['player_names'] = player_order
                 scene_manager.init('game')
 
     def update(self, manager):
