@@ -26,7 +26,7 @@ class Board:
         self.y = manager.screen.get_height() - self.height
         self.radius = manager.screen.get_width() / TOKEN_RADIUS_FACTOR
 
-    def play(self, manager, col):
+    def play(self, manager, col, player):
         colour = manager.data['turn']
         for i in range(len(self.board[col]) - 1, -1, -1):
             if self.board[col][i] == 'empty':
@@ -39,7 +39,24 @@ class Board:
                     manager.data['turn'] = 'red'
                     manager.data['move'] += 1
                 manager.move_end = time.time() + 15
-                break
+
+                if i == 0:
+                    empty = manager.board.find_empty(col)
+                    player.x += player.tile_size[0] * (empty - player.column)
+                    player.column = empty
+                return True
+        return False
+
+    def find_empty(self, col=0, directions=(1, -1)):
+        end = {
+            -1: -1,
+            1: len(self.board)
+        }
+        for direction in directions:
+            for i in range(col + direction, end[direction], direction):
+                if self.board[i][0] == 'empty':
+                    return i
+        return col
 
     def check_win(self, coords, colour):
         consecutive = 1
@@ -87,13 +104,15 @@ class Player:
     def handle_event(self, manager, event):
         if event.type == KEYDOWN:
             if event.key == self.controls[0] and self.column > 0:
-                self.x -= self.tile_size[0]
-                self.column -= 1
+                empty = manager.board.find_empty(self.column, [-1])
+                self.x -= self.tile_size[0] * (self.column - empty)
+                self.column = empty
             elif event.key == self.controls[1] and self.column < 6:
-                self.x += self.tile_size[0]
-                self.column += 1
+                empty = manager.board.find_empty(self.column, [1])
+                self.x += self.tile_size[0] * (empty - self.column)
+                self.column = empty
             elif event.key == self.controls[2]:
-                manager.board.play(manager, self.column)
+                manager.board.play(manager, self.column, self)
 
     def render(self, manager):
         pygame.draw.circle(manager.screen, COLOURS[manager.data['turn']], (self.x, self.y), self.radius)
