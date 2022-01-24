@@ -5,6 +5,7 @@
 File containing instructions on the game scene
 """
 
+import time
 import pygame
 from pygame.locals import *
 from globals.constants import *
@@ -24,7 +25,8 @@ class GameScene:
         self.data = {
             'turn': 'red',
             'won': False,
-            'names': self.manager.data['player_names']
+            'names': self.manager.data['player_names'],
+            'move': 1
         }
         self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
 
@@ -34,6 +36,15 @@ class GameScene:
         self.player2_text = Text(self.font, self.screen.get_width(), self.screen.get_height() / 10,
                                  self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][1],
                                  'yellow', 'black', 1)
+
+        # Specify time 15 seconds from now and create element to display a count down
+        self.move_end = time.time() + 15
+        self.timer = Text(self.font, 0, self.screen.get_height() / 10 + self.screen.get_width() / 20,
+                          self.screen.get_width() / 8, self.screen.get_width() / 20, '15', 'grey', 'white', 0)
+
+        self.move = Text(self.font, self.screen.get_width(),
+                         self.screen.get_height() / 10 + self.screen.get_width() / 20,
+                         self.screen.get_width() / 8, self.screen.get_width() / 20, '15', 'grey', 'white', 1)
 
         self.board = Board(self.manager)
 
@@ -47,10 +58,23 @@ class GameScene:
             self.player.handle_event(self, event)
 
     def update(self):
-        pass
+        if not self.data['won']:
+            if time.time() >= self.move_end:
+                if self.data['turn'] == 'red':
+                    self.data['turn'] = 'yellow'
+                else:
+                    self.data['turn'] = 'red'
+                self.move_end = time.time() + 15
+            else:
+                self.timer.change_text(str(int((self.move_end - time.time()) * 10) / 10))
+                self.move.change_text(f"Move {self.data['move']}")
+        else:
+            pass
 
     def render(self):
         self.player.render(self)
         self.board.render(self)
         self.player1_text.render(self)
         self.player2_text.render(self)
+        self.timer.render(self)
+        self.move.render(self)

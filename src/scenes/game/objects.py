@@ -5,6 +5,7 @@
 File defining player objects and controllers
 """
 
+import time
 import pygame
 from pygame.locals import *
 from globals.constants import *
@@ -36,6 +37,8 @@ class Board:
                     manager.data['turn'] = 'yellow'
                 else:
                     manager.data['turn'] = 'red'
+                    manager.data['move'] += 1
+                manager.move_end = time.time() + 15
                 break
 
     def check_win(self, coords, colour):
