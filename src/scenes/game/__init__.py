@@ -7,10 +7,10 @@ File containing instructions on the game scene
 
 import time
 import pygame
-from random import choice
 from pygame.locals import *
 from globals.constants import *
 from globals.ui_elements import Text
+from storage import write_file
 from .objects import Board, Player
 
 
@@ -26,16 +26,17 @@ class GameScene:
         self.data = {
             'turn': 'red',
             'won': False,
-            'names': self.manager.data['player_names'],
+            'red': self.manager.data['player_names'][0],
+            'yellow': self.manager.data['player_names'][1],
             'move': 1
         }
         self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
 
         self.player1_text = Text(self.font, 0, self.screen.get_height() / 10,
-                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][0],
+                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['red'],
                                  'red', 'white', 0)
         self.player2_text = Text(self.font, self.screen.get_width(), self.screen.get_height() / 10,
-                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['names'][1],
+                                 self.screen.get_width() / 8, self.screen.get_width() / 20, self.data['yellow'],
                                  'yellow', 'grey', 1)
 
         # Specify time 15 seconds from now and create element to display a count down
@@ -74,10 +75,14 @@ class GameScene:
                 self.timer.change_text(str(int((self.move_end - time.time()) * 10) / 10))
                 self.move.change_text(f"Move {self.data['move']}")
         else:
-            if self.data['won']:
+            if self.data['won'] and self.data['move'] < 22:
                 self.victory_banner.bg_colour = self.data['turn']
                 self.victory_banner.text_colour = {'red': 'white', 'yellow': 'grey'}[self.data['turn']]
                 self.victory_banner.change_text(self.data['turn'] + ' wins')
+
+                points = 5 + ((self.data['move'] < 11) * 2)
+                write_file('leaderboard.txt', f"{self.data['red']}:{points}")
+                self.data['move'] = 22
 
     def render(self):
         if not self.data['won'] and not self.data['move'] == 22:
