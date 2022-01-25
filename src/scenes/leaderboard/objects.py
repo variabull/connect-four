@@ -1,6 +1,6 @@
-# Menu Objects
+# Leaderboard Objects
 # Contributors: Jacob Nettleship
-# Date edited: 23/01/22
+# Date edited: 25/01/22
 """
 Objects for the menu
 """
@@ -27,13 +27,3 @@ class PlayButton(Button):
             self.active = True
         else:
             self.active = False
-
-
-class LeaderboardButton(Button):
-
-    def __init__(self, font, x, y, width, height, text, bg_colour, text_colour, positioning=1/2):
-        super().__init__(font, x, y, width, height, text, bg_colour, text_colour, positioning)
-
-    def handle_event(self, scene_manager, event):
-        if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
-            scene_manager.init('leaderboard')

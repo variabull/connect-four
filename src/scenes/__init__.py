@@ -7,6 +7,7 @@ Init file for scenes package containing SceneManager
 
 from .game import GameScene
 from .menu import MenuScene
+from .leaderboard import LeaderboardScene
 
 
 class SceneManager:
@@ -20,7 +21,8 @@ class SceneManager:
         self.clock = clock
         self.scenes = {
             'game': GameScene,
-            'menu': MenuScene
+            'menu': MenuScene,
+            'leaderboard': LeaderboardScene
         }
         self.data = {}
         self.scene = None

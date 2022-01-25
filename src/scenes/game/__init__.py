@@ -11,7 +11,7 @@ from pygame.locals import *
 from globals.constants import *
 from globals.ui_elements import Text
 from storage import write_file
-from .objects import Board, Player
+from .objects import Board, Player, VictoryBanner
 
 
 class GameScene:
@@ -55,13 +55,16 @@ class GameScene:
                              ((self.board.width / 7) * 0.5) + self.board.x,
                              (self.board.width / 7, self.board.height / 6))
 
-        self.victory_banner = Text(self.font, self.board.x,
-                                   (self.screen.get_height() - self.board.height) / 2, self.board.width,
-                                   self.screen.get_width() / (TOKEN_RADIUS_FACTOR * 1/2), 'stalemate', 'grey', 'white', 0)
+        self.victory_banner = VictoryBanner(self.font, self.board.x,
+                                            (self.screen.get_height() - self.board.height) / 2, self.board.width,
+                                            self.screen.get_width() / (TOKEN_RADIUS_FACTOR * 1 / 2), 'stalemate',
+                                            'grey', 'white', 0)
 
     def handle_event(self, event):
-        if not self.data['won']:
+        if not self.data['won'] and self.data['move'] < 22:
             self.player.handle_event(self, event)
+        else:
+            self.victory_banner.handle_event(self.manager, event)
 
     def update(self):
         if not self.data['won'] and not self.data['move'] == 22:
@@ -81,7 +84,7 @@ class GameScene:
                 self.victory_banner.change_text(self.data['turn'] + ' wins')
 
                 points = 5 + ((self.data['move'] < 11) * 2)
-                write_file('leaderboard.txt', f"{self.data['red']}:{points}")
+                write_file('../leaderboard.txt', f"{self.data['red']}:{points}")
                 self.data['move'] = 22
 
     def render(self):

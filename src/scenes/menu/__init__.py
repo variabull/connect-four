@@ -8,7 +8,7 @@ File containing instructions on the menu scene
 import pygame
 from globals.constants import *
 from globals.ui_elements import TextInput
-from .objects import PlayButton
+from .objects import PlayButton, LeaderboardButton
 
 
 class MenuScene:
@@ -22,10 +22,15 @@ class MenuScene:
         self.screen = manager.screen
         self.data = {}
         self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_1)
+        self.font_2 = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
 
         self.play_button = PlayButton(self.font, self.screen.get_width() / 2,
                                       self.screen.get_height() / 4, self.screen.get_width() / 5,
                                       self.screen.get_width() / 20, 'Play', 'red', 'white')
+
+        self.leaderboard_button = LeaderboardButton(self.font_2, self.screen.get_width() / 2,
+                                                    self.screen.get_height() * 2/5, self.screen.get_width() / 5,
+                                                    self.screen.get_width() / 20, 'Leaderboard', 'red', 'white')
 
         self.player1 = TextInput(self.font, self.screen.get_width() * 1 / 4,
                                  self.screen.get_height() / 4, self.screen.get_width() / 5,
@@ -37,6 +42,7 @@ class MenuScene:
 
     def handle_event(self, event):
         self.play_button.handle_event(self.manager, self, event)
+        self.leaderboard_button.handle_event(self.manager, event)
         self.player1.handle_event(event)
         self.player2.handle_event(event)
 
@@ -47,5 +53,6 @@ class MenuScene:
 
     def render(self):
         self.play_button.render(self)
+        self.leaderboard_button.render(self)
         self.player1.render(self)
         self.player2.render(self)

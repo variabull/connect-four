@@ -56,9 +56,16 @@ class Button:
 
     def __init__(self, font, x, y, width, height, text, bg_colour, text_colour, positioning=1/2):
         self.rect = pygame.Rect(x - width * positioning, y - height / 2, width, height)
+        self.font = font
+        self.text = text
         self.text_surface = font.render(text, True, COLOURS[text_colour])
         self.bg_colour = bg_colour
+        self.text_colour = text_colour
         self.active = True
+
+    def change_text(self, text):
+        self.text = text
+        self.text_surface = self.font.render(self.text, True, COLOURS[self.text_colour])
 
     def render(self, manager):
         pygame.draw.rect(manager.screen, COLOURS[self.bg_colour], self.rect)

@@ -9,6 +9,7 @@ import time
 import pygame
 from pygame.locals import *
 from globals.constants import *
+from globals.ui_elements import Button
 
 
 class Board:
@@ -80,7 +81,7 @@ class Board:
         return False
 
     def render(self, manager):
-        pygame.draw.rect(manager.screen, (0, 0, 190), (self.x, self.y, self.width, self.height), 0, 10)
+        pygame.draw.rect(manager.screen, COLOURS['blue'], (self.x, self.y, self.width, self.height), 0, 10)
         for x in range(0, 7):
             for y in range(0, 6):
                 pygame.draw.circle(manager.screen, COLOURS[self.board[x][y]],
@@ -116,3 +117,13 @@ class Player:
 
     def render(self, manager):
         pygame.draw.circle(manager.screen, COLOURS[manager.data['turn']], (self.x, self.y), self.radius)
+
+
+class VictoryBanner(Button):
+
+    def __init__(self, font, x, y, width, height, text, bg_colour, text_colour, positioning=1/2):
+        super().__init__(font, x, y, width, height, text, bg_colour, text_colour, positioning)
+
+    def handle_event(self, scene_manager, event):
+        if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
+            scene_manager.init('menu')

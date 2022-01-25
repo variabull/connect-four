@@ -11,7 +11,8 @@ COLOURS = {
     'yellow': (255, 255, 0),
     'white': (255, 255, 255),
     'grey': (70, 70, 70),
-    'black': (0, 0, 0)
+    'black': (0, 0, 0),
+    'blue': (0, 0, 190)
 }
 MAX_NAME_SIZE = 8
 TOKEN_RADIUS_FACTOR = 30
