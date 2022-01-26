@@ -9,3 +9,5 @@ File containing functions for storing and retrieving data
 def write_file(file, string):
     with open(file, 'a') as f:
         f.write(f"{string}\n")
+
+def read_line
