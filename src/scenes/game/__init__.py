@@ -10,7 +10,7 @@ import pygame
 from pygame.locals import *
 from globals.constants import *
 from globals.ui_elements import Text
-from storage import write_file
+from globals.leaderboard_helper_functions import save_score
 from .objects import Board, Player, VictoryBanner
 
 
@@ -83,8 +83,8 @@ class GameScene:
                 self.victory_banner.text_colour = {'red': 'white', 'yellow': 'grey'}[self.data['turn']]
                 self.victory_banner.change_text(self.data['turn'] + ' wins')
 
-                points = 5 + ((self.data['move'] < 11) * 2)
-                write_file('../leaderboard.txt', f"{self.data['red']}:{points}")
+                score = 5 + ((self.data['move'] < 11) * 2)
+                save_score(self.data[self.data['turn']], score)
                 self.data['move'] = 22
 
     def render(self):

@@ -17,7 +17,6 @@ manager = scenes.SceneManager(
     pygame.display.set_mode((0, 0), pygame.FULLSCREEN),
     pygame.time.Clock()
 )
-
 screen = manager.screen
 clock = manager.clock
 manager.init('menu')  # Start menu scene

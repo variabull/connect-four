@@ -8,8 +8,8 @@ File containing instructions on the leaderboard scene
 import pygame
 from pygame.locals import *
 from globals.constants import *
-from globals.ui_elements import Text
-from storage import write_file
+from globals.leaderboard_helper_functions import load_leaderboard, order_leaderboard
+from .objects import Table
 
 
 class LeaderboardScene:
@@ -22,6 +22,8 @@ class LeaderboardScene:
         self.manager = manager
         self.screen = manager.screen
         self.data = {}
+        self.leaderboard = order_leaderboard(load_leaderboard())
+        self.table = Table(self, self.leaderboard)
 
     def handle_event(self, event):
         pass
@@ -30,4 +32,4 @@ class LeaderboardScene:
         pass
 
     def render(self):
-        pass
+        self.table.render(self)
