@@ -25,7 +25,7 @@ class LeaderboardScene:
         self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
 
         self.back_button = BackButton(self.font, 30, 30 + self.screen.get_width() / 40, self.screen.get_width() / 5,
-                                      self.screen.get_width() / 20, 'Back', 'red', 'white', 0)
+                                      self.screen.get_width() / 20, 'Back', 'blue', 'white', 0)
         self.table = Table(self, self.leaderboard)
 
     def handle_event(self, event):
