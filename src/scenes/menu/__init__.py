@@ -1,6 +1,6 @@
 # Menu Scene
 # Contributors: Jacob Nettleship
-# Date edited: 23/01/22
+# Date edited: 31/01/22
 """
 File containing instructions on the menu scene
 """

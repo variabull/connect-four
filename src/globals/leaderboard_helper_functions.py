@@ -1,6 +1,6 @@
 # Leaderboard Helper Functions
 # Contributors: Jacob Nettleship
-# Date edited: 28/01/22
+# Date edited: 31/01/22
 """
 File containing helper functions for leaderboard operations
 """

@@ -1,6 +1,6 @@
 # Constants
 # Contributors: Jacob Nettleship
-# Date edited: 23/01/22
+# Date edited: 31/01/22
 """
 Constants to be used throughout the program to avoid magic numbers/strings
 """
