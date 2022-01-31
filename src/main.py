@@ -32,8 +32,8 @@ while True:
     # Update the current scene's data with the keys being pressed
     manager.scene.data['pressed_keys'] = pygame.key.get_pressed()
 
-    screen.fill(COLOURS['grey'])
-    manager.update()
-    manager.render()
+    screen.fill(COLOURS['grey'])  # Set background colour
+    manager.update()  # Update scene
+    manager.render()  # render scene
 
     pygame.display.update()

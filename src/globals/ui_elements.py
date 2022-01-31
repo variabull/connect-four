@@ -11,6 +11,9 @@ from globals.constants import *
 
 
 class TextInput:
+    """
+    Class to create a text input element
+    """
 
     def __init__(self, font, x, y, width, height, bg_colour, text_colour, positioning=1/2, text=''):
         self.font = font
@@ -29,11 +32,17 @@ class TextInput:
         self.active = False
 
     def handle_event(self, event):
+        """
+        Handles key press events
+        """
+
+        # Makes text input active or not depending on if it was clicked
         if event.type == MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 self.active = True
             else:
                 self.active = False
+        # Updates the text for the input
         if event.type == KEYDOWN and self.active:
             if event.key == K_BACKSPACE:
                 self.text = self.text[:-1]
@@ -41,6 +50,7 @@ class TextInput:
                 self.text += event.unicode
 
     def update(self):
+        # Changes the size of the text field to fit the name inputted
         self.text_surface = self.font.render(self.text, True, COLOURS[self.text_colour])
         self.rect.width = max(self.width, self.text_surface.get_width() + self.padding)
         self.rect.x = self.x - self.rect.width * self.positioning

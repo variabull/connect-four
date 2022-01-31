@@ -24,8 +24,11 @@ class LeaderboardScene:
         self.leaderboard = order_leaderboard(load_leaderboard())
         self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
 
+        # Button to go back to main menu
         self.back_button = BackButton(self.font, 30, 30 + self.screen.get_width() / 40, self.screen.get_width() / 5,
                                       self.screen.get_width() / 20, 'Back', 'blue', 'white', 0)
+
+        # Table to display data
         self.table = Table(self, self.leaderboard)
 
     def handle_event(self, event):

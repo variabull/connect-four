@@ -67,6 +67,7 @@ class GameScene:
             self.victory_banner.handle_event(self.manager, event)
 
     def update(self):
+        # Update the game in different ways depending on whether or not the game has been finished
         if not self.data['won'] and not self.data['move'] == 22:
             if time.time() >= self.move_end:
                 self.board.play(self, self.player.column, self.player)

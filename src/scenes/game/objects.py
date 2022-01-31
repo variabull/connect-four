@@ -28,6 +28,10 @@ class Board:
         self.radius = manager.screen.get_width() / TOKEN_RADIUS_FACTOR
 
     def play(self, manager, col, player):
+        """
+        Code for playing a move on the board
+        """
+
         colour = manager.data['turn']
         for i in range(len(self.board[col]) - 1, -1, -1):
             if self.board[col][i] == 'empty':
@@ -60,6 +64,10 @@ class Board:
         return col
 
     def check_win(self, coords, colour):
+        """
+        Algorithm for checking if specified token caused a win event
+        """
+
         consecutive = 1
         for x in range(-1, 2):
             for y in range(-1, 2):
