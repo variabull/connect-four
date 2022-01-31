@@ -15,7 +15,7 @@ def load_leaderboard():
 
 
 def convert_to_array(leaderboard):
-    return map(lambda a: f"{a}:{leaderboard[a]}\n", leaderboard)
+    return map(lambda a: f"{a}:{leaderboard[a]}", leaderboard)
 
 
 def order_leaderboard(leaderboard):

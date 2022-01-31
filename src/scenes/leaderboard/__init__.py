@@ -1,15 +1,14 @@
 # Leaderboard Scene
 # Contributors: Jacob Nettleship
-# Date edited: 25/01/22
+# Date edited: 31/01/22
 """
 File containing instructions on the leaderboard scene
 """
 
 import pygame
-from pygame.locals import *
 from globals.constants import *
 from globals.leaderboard_helper_functions import load_leaderboard, order_leaderboard
-from .objects import Table
+from .objects import BackButton, Table
 
 
 class LeaderboardScene:
@@ -23,13 +22,18 @@ class LeaderboardScene:
         self.screen = manager.screen
         self.data = {}
         self.leaderboard = order_leaderboard(load_leaderboard())
+        self.font = pygame.font.Font(None, self.screen.get_width() // FONT_SIZE_FACTOR_2)
+
+        self.back_button = BackButton(self.font, 30, 30 + self.screen.get_width() / 40, self.screen.get_width() / 5,
+                                      self.screen.get_width() / 20, 'Back', 'red', 'white', 0)
         self.table = Table(self, self.leaderboard)
 
     def handle_event(self, event):
-        pass
+        self.back_button.handle_event(self.manager, event)
 
     def update(self):
         pass
 
     def render(self):
         self.table.render(self)
+        self.back_button.render(self)
