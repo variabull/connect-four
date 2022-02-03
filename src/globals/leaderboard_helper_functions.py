@@ -47,7 +47,7 @@ def save_score(username, score):
     leaderboard = load_leaderboard()
     if username in leaderboard.keys():  # Checks whether user has played before
         # Updates score in dictionary
-        leaderboard[username] = int(leaderboard[username]) + score
+        leaderboard[username] = f"{int(leaderboard[username]) + score}\n"
         # Writes dictionary to file
         with open('../leaderboard.txt', 'w') as f:
             f.writelines(convert_to_array(leaderboard))
